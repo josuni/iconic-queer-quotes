@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Iconic Queer Quotes</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href='{{url_for("static", filename = "css/styles.css")}}'>
+</head>
+
+<body>
+<header id="header"> 
+    <p id="admin-login"><a href="{{ url_for('main.admin-login') }}">Admin Login</a></p>
+	<h1><a href="{{ url_for('main.index') }}">Iconic Queer Quotes</a></h1> 
+	<nav id="navbar">
+		<ul>
+			<li class="navbar-item">
+				<a href="{{ url_for('main.random') }}">Random Quote</a>
+			</li>
+            <li class="navbar-item">
+				<a href="{{ url_for('main.database') }}">See Quote Database</a>
+			</li>
+            <li class="navbar-item">
+				<a href="{{ url_for('main.submit') }}">Submit a Quote!</a>
+			</li>
+		</ul>
+	</nav>	
+</header>

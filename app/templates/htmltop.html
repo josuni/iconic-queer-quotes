@@ -8,7 +8,16 @@
 
 <body>
 <header id="header"> 
-    <p id="admin-login"><a href="{{ url_for('main.admin-login') }}">Admin Login</a></p>
+	<nav id="admin-navbar">
+		<ul>
+			<li class="navbar-item">
+				<a href="{{ url_for('main.admin_sign_up') }}">Admin Sign Up</a>
+			</li>
+            <li class="navbar-item">
+				<a href="{{ url_for('main.admin_login') }}">Admin Login</a>
+			</li>
+		</ul>
+	</nav>	
 	<h1><a href="{{ url_for('main.index') }}">Iconic Queer Quotes</a></h1> 
 	<nav id="navbar">
 		<ul>

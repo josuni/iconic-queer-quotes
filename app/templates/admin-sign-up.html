@@ -3,16 +3,20 @@
 <div class="container">
 	<h1>Admin Login</h1>
 	<div id="admin-login">
-		<form method="POST" action="{{ url_for('main.admin_login') }}">
+		<form method="POST" action="{{ url_for('main.admin_sign_up') }}">
 			{{ form.hidden_tag() }}
+			{{ form.admin_key.label }} 
+			{{ form.admin_key() }}
 			{{ form.username.label }} 
 			{{ form.username() }}
 			{{ form.password.label }} 
 			{{ form.password() }}
+			{{ form.confirm_password.label }} 
+			{{ form.confirm_password() }}
 			{{ form.submit}}
 		</form>
-		{% if logged_in %}
-		<p>{{ logged_in }}</p> 
+		{% if signed_up %}
+		<p>{{ signed_up }}</p> 
 		{% endif %}
 	</div>
 </div>

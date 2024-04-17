@@ -11,7 +11,7 @@ class Config:
     def init_app(app):
         app.config["SESSION_PERMANENT"] = False
         app.config["SESSION_TYPE"] = "filesystem"
-        app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+        app.config["SECRET_KEY"] = os.getenv("CONFIG_SECRET_KEY")
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "data.sqlite")
         
 

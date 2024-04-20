@@ -1,0 +1,15 @@
+{% include "htmltop.html" %}
+
+<div class="container">
+	<h1>Review Submissions</h1>
+	<div id="submissions-review">
+		{% for submission in submissions %}
+			<p>{{submission.author}}</p>
+			<p>{{submission.quote}}</p>
+			<br>
+		{% endfor %}
+	</div>
+</div>
+
+</body>
+</html>

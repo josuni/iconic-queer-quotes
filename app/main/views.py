@@ -1,12 +1,12 @@
 import os
 from flask import flash, redirect, render_template, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import main
 from .. import db
-from ..models import User
+from ..models import Quote, Submission, User
 from .forms import *
 
 from dotenv import load_dotenv
@@ -25,9 +25,19 @@ def database():
 def random():
     return render_template("random.html")
 
-@main.route("/submit")
+@main.route("/submit", methods=['GET','POST'])
 def submit():
-    return render_template("submit.html")
+    form = SubmitForm()
+    submitted = None
+    if form.validate_on_submit():
+        addSubmission(form.author.data, form.quote.data, form.tags.data)
+        submitted = "Quote Submitted!"
+    return render_template("submit.html", form=form, submitted=submitted)  
+
+@main.route("/admin-review-submissions", methods=['GET','POST'])
+@login_required
+def review_submission():
+    return render_template("review-submissions.html", submissions=getSubmissions())  
 
 @main.route("/admin-sign-up", methods=['GET','POST'])
 def admin_sign_up():
@@ -35,7 +45,6 @@ def admin_sign_up():
     signed_up = None
     if form.validate_on_submit():
         signed_up = validateSignUp(form.admin_key.data, form.username.data, form.password.data, form.confirm_password.data)
-    print(signed_up)
     return render_template("admin-sign-up.html", form=form, signed_up=signed_up)     
 
 @main.route("/admin-login", methods=['GET','POST'])
@@ -46,15 +55,16 @@ def admin_login():
         logged_in = validateLogin(form.username.data, form.password.data)
     return render_template("admin-login.html", form=form, logged_in=logged_in)     
 
-@main.route("/logout")
+@main.route("/admin-logout")
 @login_required
-def logout():
+def admin_logout():
     logout_user()
     flash("You have been logged out.")
     return redirect(url_for("main.index"))
 
 def addUser(username, password):
     hashed = generate_password_hash(password)
+    print(hashed)
     user = User(username=username, password=hashed)
     db.session.add(user)
     db.session.commit()
@@ -86,3 +96,16 @@ def validateLogin(username, password):
         logged_in = "Incorrect username or password."
 
     return logged_in
+
+def addSubmission(author, quote, tags):
+    submission = Submission(author=author, quote=quote, tags=tags)
+    db.session.add(submission)
+    db.session.commit()
+
+def getSubmissions():
+    return Submission.query.all()
+
+def addQuote(author, quote, tags):
+    quote_ = Quote(author=author, quote=quote, tags=tags)
+    db.session.add(quote_)
+    db.session.commit()

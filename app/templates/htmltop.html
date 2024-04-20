@@ -16,6 +16,17 @@
             <li class="navbar-item">
 				<a href="{{ url_for('main.admin_login') }}">Admin Login</a>
 			</li>
+			{% if current_user.is_authenticated %}
+			<li class="navbar-item">
+				<a href="{{ url_for('main.admin_login') }}">Edit Database</a>
+			</li>
+			<li class="navbar-item">
+				<a href="{{ url_for('main.review_submission') }}">Review Submission</a>
+			</li>
+			<li class="navbar-item">
+				<a href="{{ url_for('main.admin_logout') }}">Logout</a>
+			</li>
+			{% endif %}
 		</ul>
 	</nav>	
 	<h1><a href="{{ url_for('main.index') }}">Iconic Queer Quotes</a></h1> 

@@ -2,7 +2,21 @@
 
 <div class="container">
 	<h1>Submit an Iconic Queer Quote!</h1>
-	<div id="submit-form"></div>
+	<div id="submit-form">
+		<form method="POST" action="{{ url_for('main.submit') }}">
+			{{ form.hidden_tag() }}
+			{{ form.author.label }} 
+			{{ form.author() }}
+			{{ form.quote.label }} 
+			{{ form.quote() }}
+			{{ form.tags.label }} 
+			{{ form.tags() }}
+			{{ form.submit}}
+		</form>
+		{% if submitted %}
+		<p>{{ submitted }}</p> 
+		{% endif %}
+	</div>
 </div>
 
 </body>

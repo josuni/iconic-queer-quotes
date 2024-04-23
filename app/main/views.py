@@ -2,6 +2,7 @@ import os
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 
+from sqlalchemy import inspect
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import main
@@ -17,9 +18,23 @@ load_dotenv()
 def index():
     return render_template("index.html")
 
-@main.route("/database")
+@main.route("/database", methods=['GET','POST'])
 def database():
-    return render_template("database.html")
+    return render_template("database.html", quotes=getQuotes())
+
+
+@main.route("/admin-edit-database", methods=['GET','POST'])
+@login_required
+def edit_database():
+    form = ReviewForm()
+    if form.validate_on_submit():
+        if form.approve.data:
+            pass
+        elif form.reject.data:
+            deleteSubmission(form.id.data)
+            return redirect(url_for("main.edit_database"))
+    return render_template("edit-database.html", submissions=getSubmissions(), form=form)  
+
 
 @main.route("/random")
 def random():
@@ -37,7 +52,16 @@ def submit():
 @main.route("/admin-review-submissions", methods=['GET','POST'])
 @login_required
 def review_submission():
-    return render_template("review-submissions.html", submissions=getSubmissions())  
+    form = ReviewForm()
+    if form.validate_on_submit():
+        if form.approve.data:
+            submission = getSubmission(form.id.data)
+            addQuote(submission.author, submission.quote, submission.tags)
+            deleteSubmission(form.id.data)
+        elif form.reject.data:
+            deleteSubmission(form.id.data)
+            return redirect(url_for("main.review_submission"))
+    return render_template("review-submissions.html", submissions=getSubmissions(), form=form)  
 
 @main.route("/admin-sign-up", methods=['GET','POST'])
 def admin_sign_up():
@@ -105,7 +129,17 @@ def addSubmission(author, quote, tags):
 def getSubmissions():
     return Submission.query.all()
 
+def getSubmission(id):
+    return Submission.query.filter_by(id=id).first()
+
+def deleteSubmission(id):
+    Submission.query.filter_by(id=id).delete()
+    db.session.commit()
+
 def addQuote(author, quote, tags):
     quote_ = Quote(author=author, quote=quote, tags=tags)
     db.session.add(quote_)
     db.session.commit()
+
+def getQuotes():
+    return Quote.query.all()

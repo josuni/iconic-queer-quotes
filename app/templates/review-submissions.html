@@ -4,9 +4,15 @@
 	<h1>Review Submissions</h1>
 	<div id="submissions-review">
 		{% for submission in submissions %}
+			<p>{{submission.id}}</p>
 			<p>{{submission.author}}</p>
 			<p>{{submission.quote}}</p>
-			<br>
+			<form method="POST" action="{{ url_for('main.review_submission') }}">
+				{{ form.hidden_tag() }}
+				{{ form.id(type="hidden", value=submission.id) }}
+				{{ form.approve }}
+				{{ form.reject }}
+			</form>
 		{% endfor %}
 	</div>
 </div>

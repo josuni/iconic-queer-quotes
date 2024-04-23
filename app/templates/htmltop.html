@@ -18,10 +18,10 @@
 			</li>
 			{% if current_user.is_authenticated %}
 			<li class="navbar-item">
-				<a href="{{ url_for('main.admin_login') }}">Edit Database</a>
+				<a href="{{ url_for('main.edit_database') }}">Edit Database</a>
 			</li>
 			<li class="navbar-item">
-				<a href="{{ url_for('main.review_submission') }}">Review Submission</a>
+				<a href="{{ url_for('main.review_submission') }}">Review Submissions</a>
 			</li>
 			<li class="navbar-item">
 				<a href="{{ url_for('main.admin_logout') }}">Logout</a>

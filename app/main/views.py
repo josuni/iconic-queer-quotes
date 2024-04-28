@@ -121,6 +121,8 @@ def validateLogin(username, password):
     return logged_in
 
 def getDailyQuote():
+    if Quote.query.count() == 0:
+        return None
     hash_value = sum(ord(char) for char in str(date.today()))
     daily_quote_index = hash_value % Quote.query.count()
     return Quote.query.all()[daily_quote_index]

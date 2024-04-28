@@ -2,13 +2,15 @@
 
 <div class="container">
 	<h1>Admin Login</h1>
-	<div id="admin-login">
+	<div id="admin-login" class="user-form">
 		<form method="POST" action="{{ url_for('main.admin_login') }}">
 			{{ form.hidden_tag() }}
 			{{ form.username.label }} 
 			{{ form.username() }}
+			<br>
 			{{ form.password.label }} 
 			{{ form.password() }}
+			<br>
 			{{ form.submit}}
 		</form>
 		{% if logged_in %}

@@ -1,9 +1,12 @@
 body{
 	margin: 0;
 	padding: 0;
-	background-color: darkorchid;
-	font-family: Arial, Helvetica, sans-serif;
+    background-image: url('../images/Gay_Pride_Flag.svg');
+	background-size: cover;
+    background-color: darkmagenta;
+    font-family: Arial, Helvetica, sans-serif;
     align-items: center;
+    justify-items: center;
 }
 
 a{
@@ -16,9 +19,14 @@ a:hover{
 }
 
 header{
-    background-color: darkmagenta;
+    background-color: black;
     align-items: center;
     padding: 1vh 1vh;
+    outline-style: solid;
+}
+
+header a{
+    color: white;
 }
 
 #admin-navbar{
@@ -69,6 +77,9 @@ nav li{
     justify-content: center;
     padding: 2vh 2vh;
     padding-bottom: 5vh;
+    width: 75%;
+    margin: auto;
+    border-style: solid;
 }
 
 .db-results{
@@ -89,4 +100,8 @@ table th,td{
 
 .quote-data{
     max-width: 70vh;
+}
+
+.user-form br{
+    margin: 2vh;
 }

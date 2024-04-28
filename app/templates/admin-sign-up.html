@@ -2,17 +2,21 @@
 
 <div class="container">
 	<h1>Admin Sign Up</h1>
-	<div id="admin-sign-up">
+	<div id="admin-sign-up" class="user-form">
 		<form method="POST" action="{{ url_for('main.admin_sign_up') }}">
 			{{ form.hidden_tag() }}
-			{{ form.admin_key.label }} 
+			{{ form.admin_key.label }}
 			{{ form.admin_key() }}
+			<br> 
 			{{ form.username.label }} 
 			{{ form.username() }}
+			<br> 
 			{{ form.password.label }} 
 			{{ form.password() }}
-			{{ form.confirm_password.label }} 
+			<br> 
+			{{ form.confirm_password.label }}
 			{{ form.confirm_password() }}
+			<br> 
 			{{ form.submit}}
 		</form>
 		{% if signed_up %}

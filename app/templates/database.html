@@ -2,14 +2,23 @@
 
 <div class="container">
 	<h1>Iconic Queer Quotes Database</h1>
-	<div id="db-search"></div>
-    <div id="db-results">
-		{% for quote_ in quotes %}
-			<p>{{quote_.id}}</p>
-			<p>{{quote_.author}}</p>
-			<p>{{quote_.quote}}</p>
-			<br>
-		{% endfor %}
+    <div class="db-results">
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Author</th>
+				<th>Quote</th>
+				<th>Tags</th>
+			</tr>
+			{% for quote_ in quotes %}
+				<tr>
+					<td>{{quote_.id}}</td>
+					<td>{{quote_.author}}</td>
+					<td class="quote-data">{{quote_.quote}}</td>
+					<td>{{quote_.tags}}</td>
+				</tr>
+			{% endfor %}
+		</table> 
 	</div>
 </div>
 

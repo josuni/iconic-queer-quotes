@@ -2,18 +2,31 @@
 
 <div class="container">
 	<h1>Edit Database</h1>
-	<div id="submissions-review">
-		{% for submission in submissions %}
-			<p>{{submission.id}}</p>
-			<p>{{submission.author}}</p>
-			<p>{{submission.quote}}</p>
-			<form method="POST" action="{{ url_for('main.review_submission') }}">
-				{{ form.hidden_tag() }}
-				{{ form.id(type="hidden", value=submission.id) }}
-				{{ form.approve }}
-				{{ form.reject }}
-			</form>
-		{% endfor %}
+    <div class="db-results">
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Author</th>
+				<th>Quote</th>
+				<th>Tags</th>
+				<th>Options</th>
+			</tr>
+			{% for quote_ in quotes %}
+				<tr>
+					<td>{{quote_.id}}</td>
+					<td>{{quote_.author}}</td>
+					<td class="quote-data">{{quote_.quote}}</td>
+					<td>{{quote_.tags}}</td>
+					<td>
+						<form method="POST" action="{{ url_for('main.edit_database') }}">
+							{{ form.hidden_tag() }}
+							{{ form.id(type="hidden", value=quote_.id) }}
+							{{ form.delete }}
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</table> 
 	</div>
 </div>
 

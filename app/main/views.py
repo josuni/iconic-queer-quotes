@@ -4,6 +4,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from sqlalchemy import inspect
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date
 
 from . import main
 from .. import db
@@ -16,7 +17,7 @@ load_dotenv()
 
 @main.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", daily_quote=getDailyQuote())
 
 @main.route("/database", methods=['GET','POST'])
 def database():
@@ -26,19 +27,17 @@ def database():
 @main.route("/admin-edit-database", methods=['GET','POST'])
 @login_required
 def edit_database():
-    form = ReviewForm()
+    form = EditDatabaseForm()
     if form.validate_on_submit():
-        if form.approve.data:
-            pass
-        elif form.reject.data:
-            deleteSubmission(form.id.data)
+        if form.delete.data:
+            deleteQuote(form.id.data)
             return redirect(url_for("main.edit_database"))
-    return render_template("edit-database.html", submissions=getSubmissions(), form=form)  
-
+    return render_template("edit-database.html", quotes=getQuotes(), form=form)  
 
 @main.route("/random")
 def random():
-    return render_template("random.html")
+    random_quote = getRandomQuote()
+    return render_template("random.html", random_quote = random_quote)
 
 @main.route("/submit", methods=['GET','POST'])
 def submit():
@@ -121,6 +120,12 @@ def validateLogin(username, password):
 
     return logged_in
 
+def getDailyQuote():
+    hash_value = sum(ord(char) for char in str(date.today()))
+    daily_quote_index = hash_value % Quote.query.count()
+    return Quote.query.all()[daily_quote_index]
+        
+
 def addSubmission(author, quote, tags):
     submission = Submission(author=author, quote=quote, tags=tags)
     db.session.add(submission)
@@ -137,9 +142,17 @@ def deleteSubmission(id):
     db.session.commit()
 
 def addQuote(author, quote, tags):
+    quote = quote.strip('"')
     quote_ = Quote(author=author, quote=quote, tags=tags)
     db.session.add(quote_)
     db.session.commit()
 
 def getQuotes():
     return Quote.query.all()
+
+def getRandomQuote():
+    return Quote.query.order_by(db.func.random()).first()
+
+def deleteQuote(id):
+    Quote.query.filter_by(id=id).delete()
+    db.session.commit()

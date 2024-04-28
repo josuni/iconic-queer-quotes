@@ -7,13 +7,13 @@
 </head>
 
 <body>
-<header id="header"> 
+<header>
 	<nav id="admin-navbar">
 		<ul>
 			<li class="navbar-item">
 				<a href="{{ url_for('main.admin_sign_up') }}">Admin Sign Up</a>
 			</li>
-            <li class="navbar-item">
+			<li class="navbar-item">
 				<a href="{{ url_for('main.admin_login') }}">Admin Login</a>
 			</li>
 			{% if current_user.is_authenticated %}
@@ -23,24 +23,26 @@
 			<li class="navbar-item">
 				<a href="{{ url_for('main.review_submission') }}">Review Submissions</a>
 			</li>
-			<li class="navbar-item">
-				<a href="{{ url_for('main.admin_logout') }}">Logout</a>
+			<li class="navbar-item" id="logout">
+				<a href="{{ url_for('main.admin_logout') }}">Log out</a>
 			</li>
 			{% endif %}
 		</ul>
-	</nav>	
-	<h1><a href="{{ url_for('main.index') }}">Iconic Queer Quotes</a></h1> 
-	<nav id="navbar">
-		<ul>
-			<li class="navbar-item">
-				<a href="{{ url_for('main.random') }}">Random Quote</a>
-			</li>
-            <li class="navbar-item">
-				<a href="{{ url_for('main.database') }}">See Quote Database</a>
-			</li>
-            <li class="navbar-item">
-				<a href="{{ url_for('main.submit') }}">Submit a Quote!</a>
-			</li>
-		</ul>
-	</nav>	
+	</nav>
+	<div class="nav-container">	
+		<h1><a href="{{ url_for('main.index') }}">Iconic Queer Quotes</a></h1>  
+		<nav id="navbar">
+			<ul>
+				<li class="navbar-item">
+					<a href="{{ url_for('main.random') }}">Random Quote</a>
+				</li>
+				<li class="navbar-item">
+					<a href="{{ url_for('main.database') }}">See Quote Database</a>
+				</li>
+				<li class="navbar-item">
+					<a href="{{ url_for('main.submit') }}">Submit a Quote!</a>
+				</li>
+			</ul>
+		</nav>	
+	</div>
 </header>

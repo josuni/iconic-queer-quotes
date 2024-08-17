@@ -14,3 +14,4 @@ Anyone can submit a quote. Admins then can either approve or reject the submissi
 
 # Citations
 1. By Guanaco and subsequent editors - SVG source (version of 17:56, 30 Sep 2011), Public Domain, https://commons.wikimedia.org/w/index.php?curid=479191
+2. Thank you Professor Andrew Read-McFarland for code template.
